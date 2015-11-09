@@ -15,9 +15,9 @@ import android.widget.LinearLayout;
  */
 public class RocketLauncher extends LinearLayout {
 
-	public int width;
+	public static int width;
 	
-	public int height;
+	public static int height;
 	
 	private ImageView launcherImg;
 	/**
@@ -28,6 +28,16 @@ public class RocketLauncher extends LinearLayout {
 		// TODO Auto-generated constructor stub
 		LayoutInflater.from(context).inflate(R.layout.rocket, this);
 		launcherImg = (ImageView) findViewById(R.id.launcher_img);
+		width = launcherImg.getLayoutParams().width;
+		height = launcherImg.getLayoutParams().height;
+	}
+	
+	public void updateLauncherStatus(boolean isReadyToLauncher) {
+		if (isReadyToLauncher) {
+			launcherImg.setImageResource(R.drawable.launcher_bg_fire);
+		}else {
+			launcherImg.setImageResource(R.drawable.launcher_bg_hold);
+		}
 	}
 
 }

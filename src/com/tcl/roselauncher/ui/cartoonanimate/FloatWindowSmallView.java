@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 
@@ -75,6 +76,12 @@ public class FloatWindowSmallView extends LinearLayout {
      * 记录手指按下时在小悬浮窗的View上的纵坐标的值 
      */  
     private float yInView;  
+    
+    private ImageView rocketImg;
+    
+    private int rocketWidth;
+    
+    private int rocketheight;
   
     public FloatWindowSmallView(Context context) {  
         super(context);  
@@ -82,7 +89,11 @@ public class FloatWindowSmallView extends LinearLayout {
         LayoutInflater.from(context).inflate(R.layout.cartoon_ui, this);  
         View view = findViewById(R.id.small_window_layout);  
         viewWidth = view.getLayoutParams().width;  
-        viewHeight = view.getLayoutParams().height;  
+        viewHeight = view.getLayoutParams().height;
+        rocketImg = (ImageView) findViewById(R.id.launcher_img);
+        rocketWidth = rocketImg.getLayoutParams().width;
+        rocketheight = rocketImg.getLayoutParams().height;
+        
         //TextView percentView = (TextView) findViewById(R.id.percent);  
         //percentView.setText(MyWindowManager.getUsedPercentValue(context));  
     }  
@@ -110,7 +121,8 @@ public class FloatWindowSmallView extends LinearLayout {
             if (xDownInScreen == xInScreen && yDownInScreen == yInScreen) {  
                 openBigWindow();  
             }  
-            break;  
+            break;
+        
         default:  
             break;  
         }  

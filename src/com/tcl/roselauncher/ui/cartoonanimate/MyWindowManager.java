@@ -33,6 +33,10 @@ public class MyWindowManager {
 	
 	private static ActivityManager mActivityManager;
 	
+	private static RocketLauncher rocketLauncher;
+	
+	private static LayoutParams launcherParams;
+	
 	@SuppressWarnings("deprecation")
 	public static void createSmallWindow(Context context) {  
         WindowManager windowManager = getWindowManager(context);  
@@ -85,6 +89,53 @@ public class MyWindowManager {
             }  
             windowManager.addView(bigWindow, bigWindowParams);  
 		}
+	}
+	
+	@SuppressWarnings("deprecation")
+	public static void creatLauncher(Context context) {
+		WindowManager windowManager = getWindowManager(context);
+		int screenWidth = windowManager.getDefaultDisplay().getWidth();
+		int screenHeight = windowManager.getDefaultDisplay().getHeight();
+		if (rocketLauncher == null) {
+			rocketLauncher = new RocketLauncher(context);
+			if (launcherParams == null) {
+				launcherParams.x = screenWidth / 2 - RocketLauncher.width / 2;
+				launcherParams.y = screenHeight - RocketLauncher.height;
+				launcherParams.type = LayoutParams.TYPE_PHONE;
+				launcherParams.format = PixelFormat.RGBA_8888;
+				launcherParams.gravity = Gravity.LEFT | Gravity.TOP;
+				launcherParams.width = RocketLauncher.width;
+				launcherParams.height = RocketLauncher.height;
+			}
+			windowManager.addView(rocketLauncher, launcherParams);
+		}
+	}
+
+	public static void removeLuancher(Context context) {
+		if (rocketLauncher != null) {
+			WindowManager windowManager = getWindowManager(context);
+			windowManager.removeView(rocketLauncher);
+			rocketLauncher = null;
+		}
+	}
+	
+	public static void updateLauncher() {
+		if (rocketLauncher != null) {
+			rocketLauncher.updateLauncherStatus(isReadyToLaunch());
+		}
+	}
+	
+	/**
+	 * @return
+	 */
+	private static boolean isReadyToLaunch() {
+		// TODO Auto-generated method stub
+		if ((smallWindowParams.x > launcherParams.x && smallWindowParams.x 
+				+ smallWindowParams.width < launcherParams.x + launcherParams.width)
+				&& (smallWindowParams.y + smallWindowParams.height > launcherParams.y)) {
+			return true;
+		}
+		return false;
 	}
 
 	/**
