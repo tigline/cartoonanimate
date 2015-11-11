@@ -31,7 +31,6 @@ public class MainActivity extends Activity {
 				Intent intent = new Intent(MainActivity.this, FloatWindowService.class);
 				startService(intent);
 				finish();
-				
 			}
 		});
     }
